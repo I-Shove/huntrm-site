@@ -1,272 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Hunt Risk Management</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>Hunt Risk Management</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f1116;
-      color: white;
-      margin: 0;
-      padding: 0;
-    }
+<style>
 
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 80px 20px;
-      text-align: center;
-    }
+body{
+    margin:0;
+    font-family: Inter, system-ui, sans-serif;
+    background: radial-gradient(circle at top,#111a33,#05070f);
+    color:white;
+}
 
-    h1 {
-      font-size: 48px;
-      margin-bottom: 10px;
-    }
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:100px 20px;
+}
 
-    .subtitle {
-      color: #aaa;
-      font-size: 20px;
-      margin-bottom: 40px;
-    }
+h1{
+    font-size:64px;
+    letter-spacing:2px;
+    margin-bottom:10px;
+}
 
-    .links {
-      margin-bottom: 70px;
-    }
+.subtitle{
+    color:#9da6c2;
+    font-size:20px;
+    margin-bottom:40px;
+}
 
-    .links a {
-      display: inline-block;
-      margin: 10px;
-      padding: 12px 22px;
-      border: 1px solid #444;
-      border-radius: 6px;
-      text-decoration: none;
-      color: white;
-      transition: background 0.2s ease;
-    }
+.links a{
+    display:inline-block;
+    margin:10px;
+    padding:14px 28px;
+    border-radius:10px;
+    text-decoration:none;
+    color:white;
+    border:1px solid #3b4265;
+    background:rgba(20,30,60,0.4);
+    backdrop-filter: blur(8px);
+    transition:.2s;
+}
 
-    .links a:hover {
-      background: #1c1f26;
-    }
+.links a:hover{
+    border-color:#7a5cff;
+    box-shadow:0 0 20px #7a5cff44;
+}
 
-    .section {
-      margin: 70px 0;
-      text-align: left;
-    }
+.section{
+    margin-top:100px;
+}
 
-    .section h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 34px;
-    }
+.section-title{
+    font-size:14px;
+    letter-spacing:3px;
+    color:#6f7aa3;
+    margin-bottom:15px;
+}
 
-    .intro {
-      max-width: 760px;
-      margin: 0 auto;
-      color: #c7c7c7;
-      font-size: 18px;
-      line-height: 1.7;
-      text-align: center;
-    }
+.section-heading{
+    font-size:36px;
+    margin-bottom:40px;
+}
 
-    .posts {
-      display: grid;
-      gap: 20px;
-      margin-top: 30px;
-    }
+.intro{
+    max-width:700px;
+    line-height:1.7;
+    color:#b6bfdc;
+}
 
-    .post-card {
-      border: 1px solid #2a2d36;
-      border-radius: 10px;
-      padding: 22px;
-      background: #141821;
-    }
+.post-card{
+    background:rgba(18,25,47,0.7);
+    border:1px solid #2a345e;
+    border-radius:14px;
+    padding:30px;
+    backdrop-filter:blur(10px);
+}
 
-    .post-card h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
-      font-size: 22px;
-    }
+.post-card h3{
+    margin-top:0;
+}
 
-    .post-card h3 a {
-      color: white;
-      text-decoration: none;
-    }
+.post-card a{
+    color:white;
+    text-decoration:none;
+}
 
-    .post-card h3 a:hover {
-      text-decoration: underline;
-    }
+.post-card a:hover{
+    color:#7a5cff;
+}
 
-    .post-meta {
-      color: #8d96a7;
-      font-size: 14px;
-      margin-bottom: 12px;
-    }
+.post-meta{
+    font-size:13px;
+    color:#8790b5;
+    margin-bottom:15px;
+}
 
-    .post-excerpt {
-      color: #c7c7c7;
-      line-height: 1.6;
-    }
+.video{
+    margin-top:20px;
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid #2a345e;
+}
 
-    .video-wrap {
-      max-width: 860px;
-      margin: 0 auto;
-      border: 1px solid #2a2d36;
-      border-radius: 10px;
-      padding: 16px;
-      background: #141821;
-    }
+.video iframe{
+    width:100%;
+    height:500px;
+    border:0;
+}
 
-    .video-frame {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      border-radius: 8px;
-    }
+footer{
+    margin-top:120px;
+    font-size:13px;
+    color:#666f95;
+}
 
-    .video-frame iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .video-note {
-      color: #aaa;
-      text-align: center;
-      margin-top: 14px;
-    }
-
-    .footer {
-      margin-top: 70px;
-      color: #777;
-      font-size: 14px;
-      text-align: center;
-    }
-
-    @media (max-width: 700px) {
-      h1 {
-        font-size: 38px;
-      }
-
-      .subtitle {
-        font-size: 18px;
-      }
-
-      .section h2 {
-        font-size: 28px;
-      }
-    }
-  </style>
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>Hunt Risk Management</h1>
-    <div class="subtitle">Insurance • Risk • Decentralized Systems</div>
 
-    <div class="links">
-      <a href="https://huntrisk.substack.com" target="_blank" rel="noopener noreferrer">Substack</a>
-      <a href="https://www.youtube.com/@HuntRiskManagement" target="_blank" rel="noopener noreferrer">YouTube</a>
-      <a href="https://www.linkedin.com/in/williamjhuntjr/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-    </div>
+<div class="container">
 
-    <div class="section">
-      <div class="intro">
-        Hunt Risk Management explores the evolution of insurance markets, parametric risk models, underwriting infrastructure, and decentralized financial systems.
-      </div>
-    </div>
+<h1>Hunt Risk Management</h1>
+<div class="subtitle">
+Insurance • Risk • Decentralized Systems
+</div>
 
-    <div class="section">
-      <h2>Latest Writing</h2>
-      <div id="substack-posts" class="posts">
-        <div class="post-card">
-          <h3>Loading latest posts...</h3>
-        </div>
-      </div>
-    </div>
+<div class="links">
+<a href="https://huntrisk.substack.com">Substack</a>
+<a href="https://youtube.com/@HuntRiskManagement">YouTube</a>
+<a href="https://www.linkedin.com/in/williamjhuntjr/">LinkedIn</a>
+</div>
 
-    <div class="section">
-      <h2>Featured Video</h2>
-      <div class="video-wrap">
-        <div class="video-frame">
-          <!-- Replace VIDEO_ID_HERE with your actual YouTube video ID -->
-          <iframe
-            src="https://www.youtube.com/embed/VIDEO_ID_HERE"
-            title="Hunt Risk Management featured video"
-            allowfullscreen>
-          </iframe>
-        </div>
-        <div class="video-note">
-          Featured analysis and commentary from Hunt Risk Management.
-        </div>
-      </div>
-    </div>
+<div class="section">
+<div class="intro">
+Hunt Risk Management explores the evolving architecture of insurance markets, parametric risk models, underwriting infrastructure, and decentralized financial systems.
+</div>
+</div>
 
-    <div class="footer">
-      © Hunt Risk Management
-    </div>
-  </div>
+<div class="section">
+
+<div class="section-title">RESEARCH STREAM</div>
+<div class="section-heading">Latest Writing</div>
+
+<div id="substack-posts">
+Loading latest posts...
+</div>
+
+</div>
+
+<div class="section">
+
+<div class="section-title">MEDIA SIGNAL</div>
+<div class="section-heading">Featured Video</div>
+
+<div class="video">
+<iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE"></iframe>
+</div>
+
+</div>
+
+<footer>
+© Hunt Risk Management
+</footer>
+
+</div>
 
 <script>
-  const apiUrl = "https://huntrm.com/api/substack";
 
-  async function loadSubstackPosts() {
-    const container = document.getElementById("substack-posts");
+const apiUrl = "https://huntrm.com/api/substack";
 
-    try {
-      const response = await fetch(apiUrl);
-      const data = await response.json();
+async function loadSubstackPosts(){
 
-      if (!data.posts || data.posts.length === 0) {
-        container.innerHTML = `
-          <div class="post-card">
-            <h3>No posts found yet.</h3>
-          </div>
-        `;
-        return;
-      }
+const container = document.getElementById("substack-posts");
 
-      container.innerHTML = data.posts.map(post => {
-        const date = new Date(post.pubDate).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric"
-        });
+try{
 
-        return `
-          <div class="post-card">
-            <h3>
-              <a href="${post.link}" target="_blank">
-                ${post.title}
-              </a>
-            </h3>
-            <div class="post-meta">${date}</div>
-            <div class="post-excerpt">${post.excerpt}</div>
-          </div>
-        `;
-      }).join("");
+const response = await fetch(apiUrl);
+const data = await response.json();
 
-    } catch (error) {
+if(!data.posts || data.posts.length === 0){
+container.innerHTML="No posts found.";
+return;
+}
 
-      container.innerHTML = `
-        <div class="post-card">
-          <h3>
-            <a href="https://huntrisk.substack.com" target="_blank">
-              Visit the Substack archive
-            </a>
-          </h3>
-        </div>
-      `;
-    }
-  }
+container.innerHTML = data.posts.map(post=>{
 
-  loadSubstackPosts();
+const date = new Date(post.pubDate).toLocaleDateString("en-US",{year:"numeric",month:"short",day:"numeric"});
+
+return `
+<div class="post-card">
+<h3><a href="${post.link}" target="_blank">${post.title}</a></h3>
+<div class="post-meta">${date}</div>
+<div>${post.excerpt}</div>
+</div>
+`;
+
+}).join("");
+
+}catch(e){
+
+container.innerHTML=`<div class="post-card">
+<a href="https://huntrisk.substack.com">Visit the Substack archive</a>
+</div>`;
+
+}
+
+}
+
+loadSubstackPosts();
+
 </script>
+
 </body>
 </html>
