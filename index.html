@@ -213,60 +213,60 @@
     </div>
   </div>
 
-  <script>
-    const rssUrl = "https://huntrisk.substack.com/feed";
-    const apiUrl = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(rssUrl);
+<script>
+  const apiUrl = "https://huntrm.com/api/substack";
 
-    async function loadSubstackPosts() {
-      const container = document.getElementById("substack-posts");
+  async function loadSubstackPosts() {
+    const container = document.getElementById("substack-posts");
 
-      try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
 
-        if (!data.items || !data.items.length) {
-          container.innerHTML = `
-            <div class="post-card">
-              <h3>No posts found yet.</h3>
-            </div>
-          `;
-          return;
-        }
-
-        const posts = data.items.slice(0, 3);
-
-        container.innerHTML = posts.map(post => {
-          const date = new Date(post.pubDate).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "short",
-            day: "numeric"
-          });
-
-          const rawDescription = post.description || "";
-          const plainText = rawDescription.replace(/<[^>]*>/g, "").trim();
-          const excerpt = plainText.length > 220
-            ? plainText.slice(0, 220) + "..."
-            : plainText;
-
-          return `
-            <div class="post-card">
-              <h3><a href="${post.link}" target="_blank" rel="noopener noreferrer">${post.title}</a></h3>
-              <div class="post-meta">${date}</div>
-              <div class="post-excerpt">${excerpt || "Read the latest essay on Substack."}</div>
-            </div>
-          `;
-        }).join("");
-      } catch (error) {
+      if (!data.posts || data.posts.length === 0) {
         container.innerHTML = `
           <div class="post-card">
-            <h3><a href="https://huntrisk.substack.com" target="_blank" rel="noopener noreferrer">Visit the Substack archive</a></h3>
-            <div class="post-excerpt">Latest posts could not be loaded automatically right now.</div>
+            <h3>No posts found yet.</h3>
           </div>
         `;
+        return;
       }
-    }
 
-    loadSubstackPosts();
-  </script>
+      container.innerHTML = data.posts.map(post => {
+        const date = new Date(post.pubDate).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric"
+        });
+
+        return `
+          <div class="post-card">
+            <h3>
+              <a href="${post.link}" target="_blank">
+                ${post.title}
+              </a>
+            </h3>
+            <div class="post-meta">${date}</div>
+            <div class="post-excerpt">${post.excerpt}</div>
+          </div>
+        `;
+      }).join("");
+
+    } catch (error) {
+
+      container.innerHTML = `
+        <div class="post-card">
+          <h3>
+            <a href="https://huntrisk.substack.com" target="_blank">
+              Visit the Substack archive
+            </a>
+          </h3>
+        </div>
+      `;
+    }
+  }
+
+  loadSubstackPosts();
+</script>
 </body>
 </html>
