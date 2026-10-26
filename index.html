@@ -18,6 +18,7 @@ body{
     max-width:1000px;
     margin:auto;
     padding:100px 20px;
+    overflow-wrap:anywhere;
 }
 
 h1{
@@ -99,23 +100,76 @@ h1{
     margin-bottom:15px;
 }
 
-.video{
-    margin-top:20px;
-    border-radius:14px;
-    overflow:hidden;
-    border:1px solid #2a345e;
-}
-
-.video iframe{
-    width:100%;
-    height:500px;
-    border:0;
+.feed-retry{
+    margin-right:16px;
+    padding:10px 16px;
+    border:1px solid #8790b5;
+    border-radius:8px;
+    background:transparent;
+    color:white;
+    font:inherit;
+    cursor:pointer;
 }
 
 footer{
     margin-top:120px;
     font-size:13px;
     color:#666f95;
+}
+
+@media (max-width:600px){
+    .container{
+        padding:48px 20px;
+    }
+
+    h1{
+        margin-top:0;
+        font-size:clamp(32px, 9vw, 44px);
+        line-height:1.15;
+        letter-spacing:0.02em;
+    }
+
+    .subtitle{
+        font-size:18px;
+        line-height:1.5;
+        margin-bottom:28px;
+    }
+
+    .links{
+        display:flex;
+        flex-wrap:wrap;
+        gap:10px;
+    }
+
+    .links a{
+        flex:1 1 70px;
+        margin:0;
+        padding:14px 12px;
+        text-align:center;
+    }
+
+    .section{
+        margin-top:56px;
+    }
+
+    .section-heading{
+        font-size:30px;
+        margin-bottom:24px;
+    }
+
+    .post-card{
+        padding:20px;
+        line-height:1.6;
+    }
+
+    .feed-retry{
+        min-height:44px;
+        margin-bottom:12px;
+    }
+
+    footer{
+        margin-top:64px;
+    }
 }
 
 </style>
@@ -147,19 +201,8 @@ Hunt Risk Management explores the evolving architecture of insurance markets, pa
 <div class="section-title">RESEARCH STREAM</div>
 <div class="section-heading">Latest Writing</div>
 
-<div id="substack-posts">
+<div id="substack-posts" aria-live="polite" aria-busy="true">
 Loading latest posts...
-</div>
-
-</div>
-
-<div class="section">
-
-<div class="section-title">MEDIA SIGNAL</div>
-<div class="section-heading">Featured Video</div>
-
-<div class="video">
-<iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE"></iframe>
 </div>
 
 </div>
@@ -177,15 +220,35 @@ const apiUrl = "https://huntrm.com/api/substack";
 async function loadSubstackPosts(){
 
 const container = document.getElementById("substack-posts");
+container.textContent = "Loading latest posts...";
+container.setAttribute("aria-busy", "true");
+const controller = new AbortController();
+const timeout = setTimeout(() => controller.abort(), 10000);
 
 try{
 
-const response = await fetch(apiUrl);
+const response = await fetch(apiUrl, { signal: controller.signal });
+if(!response.ok){
+throw new Error("Feed request failed");
+}
 const data = await response.json();
 
-if(!data.posts || data.posts.length === 0){
-container.innerHTML="No posts found.";
+if(!data || data.error || !Array.isArray(data.posts)){
+throw new Error("Invalid feed response");
+}
+
+if(data.posts.length === 0){
+container.innerHTML=`<div class="post-card">
+<p>No posts are available here yet.</p>
+<a href="https://huntrisk.substack.com">Visit the Substack archive</a>
+</div>`;
 return;
+}
+
+if(!data.posts.every(post => post && typeof post.title === "string" &&
+typeof post.link === "string" && typeof post.pubDate === "string" &&
+typeof post.excerpt === "string")){
+throw new Error("Invalid post data");
 }
 
 container.innerHTML = data.posts.map(post=>{
@@ -205,9 +268,15 @@ return `
 }catch(e){
 
 container.innerHTML=`<div class="post-card">
+<p>We couldn’t load the latest writing right now. Please try again or read directly on Substack.</p>
+<button class="feed-retry" type="button">Try again</button>
 <a href="https://huntrisk.substack.com">Visit the Substack archive</a>
 </div>`;
+container.querySelector("button").addEventListener("click", loadSubstackPosts);
 
+}finally{
+clearTimeout(timeout);
+container.setAttribute("aria-busy", "false");
 }
 
 }
